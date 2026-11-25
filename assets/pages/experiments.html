@@ -1,0 +1,367 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="color-scheme" content="light dark" />
+    <meta name="description" content="NORVA STUDIO — Experiments 实验：水的记忆、生成式潮汐、声音地形、光尘星图，四件可以玩、可以听的实验。" />
+    <link rel="icon" href="data:," />
+    <title>实验 Experiments — NORVA STUDIO</title>
+    <style>
+      :root{
+        --bg:#eef4f1; --bg-deep:#e2ece8; --panel:#ffffff; --panel-2:#e9f1ed;
+        --ink:#0f1f1a; --ink-2:#39534c; --muted:#6d847d; --line:rgba(15,31,26,.14);
+        --water:#0e7263; --water-deep:#0a4f46; --water-soft:rgba(14,114,99,.12);
+        --gold:#9a7835;
+        --card-shadow:0 18px 44px rgba(13,42,36,.10);
+        --bar-bg:rgba(255,255,255,.86);
+        --serif:Georgia,"Times New Roman","Songti SC","STSong","Noto Serif SC",serif;
+        --serif-cn:"Songti SC","STSong","STKaiti","KaiTi","Noto Serif SC","SimSun",serif;
+        --mono:ui-monospace,"SF Mono",Menlo,Consolas,"Courier New",monospace;
+      }
+      @media (prefers-color-scheme: dark){
+        :root{
+          --bg:#04080c; --bg-deep:#02040a; --panel:#091119; --panel-2:#0c1722;
+          --ink:#eaf4ef; --ink-2:#b7cdc5; --muted:#7d948c; --line:rgba(234,244,239,.13);
+          --water:#5fd3bf; --water-deep:#8fe8d6; --water-soft:rgba(95,211,191,.10);
+          --gold:#cdb27a;
+          --card-shadow:0 18px 44px rgba(0,0,0,.5);
+          --bar-bg:rgba(6,13,19,.84);
+        }
+      }
+      *{box-sizing:border-box}
+      body{margin:0;background:var(--bg);color:var(--ink);letter-spacing:.012em;
+        font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei","Noto Sans SC",sans-serif;
+        -webkit-font-smoothing:antialiased;overflow-x:hidden}
+      a{color:inherit}
+      .mono{font-family:var(--mono)}
+      ::selection{background:var(--water);color:#fff}
+      :focus-visible{outline:2px solid var(--water);outline-offset:3px;border-radius:6px}
+      .topbar{position:fixed;top:0;left:0;right:0;z-index:70;display:flex;align-items:center;gap:14px;
+        padding:8px 16px;background:var(--bar-bg);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
+      .brand{font-family:var(--serif);font-size:17px;letter-spacing:.28em;font-weight:600;text-decoration:none;white-space:nowrap;padding:6px 2px}
+      .brand small{display:block;font-family:var(--mono);font-size:8.5px;letter-spacing:.3em;color:var(--muted);font-weight:400;margin-top:1px}
+      .topnav{display:flex;gap:2px;align-items:center;margin-left:auto;overflow-x:auto;scrollbar-width:none;max-width:100%}
+      .topnav::-webkit-scrollbar{display:none}
+      .topnav a{text-decoration:none;font-size:13px;letter-spacing:.05em;padding:9px 12px;border-radius:999px;color:var(--ink-2);white-space:nowrap;min-height:38px;display:inline-flex;align-items:center}
+      .topnav a:hover,.topnav a:focus-visible{background:var(--water-soft);color:var(--ink)}
+      .topnav a.on{background:var(--water-soft);color:var(--ink);font-weight:600}
+      .topnav a.cta{background:var(--water);color:#fff;font-weight:600}
+      @media (prefers-color-scheme: dark){.topnav a.cta{color:#04231c}}
+      main{max-width:1180px;margin:0 auto;padding:130px 22px 30px}
+      .sec-head{display:flex;align-items:baseline;gap:20px;flex-wrap:wrap;margin-bottom:16px}
+      .sec-index{font-size:12px;letter-spacing:.3em;color:var(--water)}
+      .sec-head h1{margin:0;font-family:var(--serif-cn);font-size:clamp(34px,6vw,58px);font-weight:900;letter-spacing:.03em;line-height:1.15}
+      .sec-head h1 .en{font-family:var(--serif);font-weight:500;letter-spacing:.1em}
+      .sec-lede{max-width:660px;color:var(--ink-2);line-height:2.05;font-size:16px;margin:0 0 34px;text-align:justify;text-justify:inter-ideograph}
+      .rule{height:1px;background:var(--line);margin:0 0 40px}
+      .grid{display:grid;grid-template-columns:repeat(12,1fr);gap:18px}
+      .card{grid-column:span 6;border:1px solid var(--line);border-radius:20px;background:var(--panel);overflow:hidden;box-shadow:var(--card-shadow);display:flex;flex-direction:column}
+      .card.wide{grid-column:span 12}
+      @media (max-width:820px){.card{grid-column:span 12}}
+      .card-media{position:relative;aspect-ratio:16/9;overflow:hidden;background:var(--panel-2)}
+      .card-media svg{position:absolute;inset:0;width:100%;height:100%}
+      .card-media .badge{position:absolute;left:14px;top:14px;z-index:2;font-size:10.5px;letter-spacing:.18em;padding:5px 10px;border-radius:999px;background:rgba(4,16,14,.55);color:#dff5ee;backdrop-filter:blur(4px)}
+      .card.exp-play .card-media{aspect-ratio:21/9;min-height:240px}
+      #rippleMini{position:absolute;inset:0;width:100%;height:100%;cursor:crosshair}
+      .card-body{padding:24px 24px 26px;display:flex;flex-direction:column;gap:12px;flex:1}
+      .card-body h3{margin:0;font-family:var(--serif-cn);font-size:21px;font-weight:900;letter-spacing:.02em;line-height:1.45}
+      .card-body h3 .en{font-family:var(--serif);letter-spacing:.06em;font-weight:500}
+      .card-body p{margin:0;color:var(--ink-2);line-height:1.95;font-size:14.5px}
+      .meta-row{display:flex;gap:7px;flex-wrap:wrap;margin-top:auto;padding-top:6px}
+      .meta-row span{font-family:var(--mono);font-size:10.5px;letter-spacing:.05em;color:var(--muted);border:1px solid var(--line);border-radius:999px;padding:5px 11px}
+      .syy{display:grid;grid-template-columns:2.4em 1fr;gap:7px 14px;font-size:13.5px;line-height:1.75;color:var(--ink-2);border-top:1px dashed var(--line);padding-top:14px;margin-top:6px}
+      .syy b{color:var(--water);font-weight:600;letter-spacing:.2em;font-size:12px;padding-top:3px}
+      .purpose{border-top:1px solid var(--line);padding-top:12px;margin:2px 0 0;font-size:13px;line-height:1.85;color:var(--muted)}
+      .purpose b{display:inline-block;font-family:var(--mono);font-size:10.5px;letter-spacing:.22em;color:var(--water-deep);font-weight:500;margin-right:10px}
+      @media (prefers-color-scheme: dark){.purpose b{color:var(--water)}}
+      .purpose strong{color:var(--ink-2);font-weight:600}
+      .tide-wave{animation:tidedrift 11s ease-in-out infinite alternate}
+      .tide-wave.slow{animation-duration:17s}
+      .tide-wave.slower{animation-duration:23s}
+      @keyframes tidedrift{from{transform:translateX(-16px)}to{transform:translateX(16px)}}
+      .listen-row{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin-top:2px}
+      .listen-btn{display:inline-flex;align-items:center;gap:9px;border:1px solid var(--gold);color:var(--ink);background:transparent;border-radius:999px;padding:10px 18px;font-size:13.5px;letter-spacing:.06em;cursor:pointer;min-height:42px;font-family:inherit}
+      .listen-btn:hover{background:rgba(154,120,53,.10)}
+      .listen-btn .dotp{width:9px;height:9px;border-radius:50%;background:var(--gold)}
+      .listen-btn.playing .dotp{animation:blink 1s ease-in-out infinite}
+      @keyframes blink{0%,100%{opacity:.4}50%{opacity:1}}
+      .listen-note{font-size:12.5px;color:var(--muted);letter-spacing:.04em}
+      .tp{transition:fill .3s}
+      .tp.on{fill:#ffd98a}
+      .next-row{display:flex;gap:12px;flex-wrap:wrap;margin-top:26px}
+      .next-row a{flex:1 1 220px;text-decoration:none;border:1px solid var(--line);border-radius:16px;padding:16px 18px;background:var(--panel);font-size:15px;font-weight:600;box-shadow:var(--card-shadow)}
+      .next-row a small{display:block;color:var(--muted);margin-top:4px;font-size:12px;font-weight:400;line-height:1.7}
+      footer{margin-top:100px;border-top:1px solid var(--line);background:var(--bg-deep)}
+      .foot{max-width:1180px;margin:0 auto;padding:56px 22px 50px;text-align:center}
+      .foot a.mail{font-family:var(--mono);color:var(--water);text-decoration:none;font-size:16px}
+      .foot small{display:block;margin-top:22px;color:var(--muted);font-size:11.5px;letter-spacing:.14em;line-height:2}
+      @media (prefers-reduced-motion: reduce){.tide-wave,.listen-btn.playing .dotp{animation:none}}
+    </style>
+  </head>
+  <body>
+    <nav class="topbar" aria-label="站点导航">
+      <a class="brand" href="../../index.html">NORVA<small>STUDIO</small></a>
+      <div class="topnav">
+        <a href="../../index.html">首页 · 星图</a>
+        <a href="onething.html">今日一事</a>
+        <a href="experiments.html" class="on">实验</a>
+        <a href="originals.html">原创</a>
+        <a href="products.html">产品</a>
+        <a href="archive.html">档案</a>
+        <a href="method.html">方法</a>
+        <a href="projects.html">委托</a>
+        <a class="cta" href="contact.html">联系</a>
+      </div>
+    </nav>
+
+    <main>
+      <div class="sec-head">
+        <span class="sec-index mono">EXPERIMENTS</span>
+        <h1>实验 <span class="en">Experiments</span></h1>
+      </div>
+      <p class="sec-lede">没有 brief，没有 deadline，可以失败。每个实验先在这里活一段时间——能玩、能看、三十秒能懂，才有资格长成作品。</p>
+      <div class="rule"></div>
+
+      <div class="grid">
+        <!-- EXP 01 playable -->
+        <article class="card wide exp-play">
+          <div class="card-media">
+            <canvas id="rippleMini" aria-label="可玩的涟漪实验：在画面上轻点或滑动"></canvas>
+            <span class="badge">EXP 01 · 可直接玩</span>
+          </div>
+          <div class="card-body">
+            <h3>水的记忆 <span class="en">Water Memory</span></h3>
+            <p>全站的第一个实验，也是全站的材料本身：指尖经过的地方，水会记住一会儿，再慢慢忘掉。首屏的水面、星图的流动，都从这块小水面长出来。在上面轻点、滑动试试。</p>
+            <div class="syy">
+              <b>身</b><span>指针即身体，水面即时回应每一次触碰。</span>
+              <b>语</b><span>不写说明，涟漪自己就是语言。</span>
+              <b>意</b><span>观察：人愿意为一片水停留多久？</span>
+            </div>
+            <p class="purpose"><b>这个互动的作用</b>试手感的地方。<strong>首屏的水面、星图的流动，用的都是这一套涟漪</strong>——先在这里点几下、滑几下，整个网站的动效语言就都懂了。</p>
+            <div class="meta-row"><span>状态 · 进行中</span><span>Canvas 2D</span><span>无 3D · 轻量</span></div>
+          </div>
+        </article>
+
+        <!-- EXP 02 -->
+        <article class="card">
+          <div class="card-media">
+            <svg viewBox="0 0 800 450" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+              <defs>
+                <linearGradient id="tideBg" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0" stop-color="#0b2233"/><stop offset="1" stop-color="#062a2a"/>
+                </linearGradient>
+              </defs>
+              <rect width="800" height="450" fill="url(#tideBg)"/>
+              <g fill="none" stroke="#5fd3bf" stroke-width="2">
+                <path class="tide-wave" d="M-20,300 C150,240 260,360 420,300 S700,240 830,310" opacity=".9"/>
+                <path class="tide-wave slow" d="M-20,330 C150,275 270,385 430,330 S700,275 830,340" opacity=".6"/>
+                <path class="tide-wave slower" d="M-20,360 C160,310 280,410 440,360 S700,310 830,370" opacity=".38"/>
+                <path class="tide-wave slow" d="M-20,390 C170,345 290,435 450,390 S700,345 830,400" opacity=".22"/>
+              </g>
+              <g fill="none" stroke="#6fb6e8" stroke-width="1.6">
+                <path class="tide-wave slower" d="M-20,180 C180,130 300,220 470,175 S720,130 830,190" opacity=".55"/>
+                <path class="tide-wave" d="M-20,215 C170,168 290,252 460,212 S710,168 830,222" opacity=".35"/>
+              </g>
+              <circle cx="620" cy="110" r="34" fill="#eaf6ff" opacity=".92"/>
+              <circle cx="620" cy="110" r="58" fill="none" stroke="#eaf6ff" stroke-opacity=".35"/>
+            </svg>
+            <span class="badge">EXP 02 · 原型</span>
+          </div>
+          <div class="card-body">
+            <h3>生成式潮汐 <span class="en">Generative Tide</span></h3>
+            <p>把一天里的真实潮汐与风速数据，翻译成永不重复的波形画面。同一个实验在清晨和深夜打开，长得完全不一样——数据是活的，画面就是活的。</p>
+            <div class="syy">
+              <b>身</b><span>接入真实数据流，让自然替画面做决定。</span>
+              <b>语</b><span>波形即叙事：涨潮是句子，退潮是停顿。</span>
+              <b>意</b><span>当作者让出一半控制权，作品还算不算“作”？</span>
+            </div>
+            <p class="purpose"><b>这个互动的作用</b>它不是用来“玩”的，是用来“看”的：<strong>证明页面可以是活的</strong>——数据在变，画面就跟着变。目前是原型阶段，波形先以动画呈现数据驱动的样子；真实数据接入后，同一页面在清晨和深夜打开会长得不一样。</p>
+            <div class="meta-row"><span>状态 · 原型测试</span><span>数据驱动</span><span>SVG / Canvas</span></div>
+          </div>
+        </article>
+
+        <!-- EXP 03 -->
+        <article class="card">
+          <div class="card-media">
+            <svg viewBox="0 0 800 450" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+              <rect width="800" height="450" fill="#0d1410"/>
+              <g stroke="#cdb27a" fill="none" stroke-width="1.6">
+                <path d="M60,380 L240,190 L330,290 L470,120 L580,250 L740,90" opacity=".95"/>
+                <path d="M60,380 L240,190 L330,290 L470,120 L580,250 L740,90" transform="translate(0,26)" opacity=".45"/>
+                <path d="M60,380 L240,190 L330,290 L470,120 L580,250 L740,90" transform="translate(0,52)" opacity=".22"/>
+              </g>
+              <g fill="#e9f2ee">
+                <circle class="tp" data-i="1" cx="240" cy="190" r="5"/><circle class="tp" data-i="3" cx="470" cy="120" r="5"/><circle class="tp" data-i="5" cx="740" cy="90" r="5"/>
+              </g>
+              <g stroke="#5fd3bf" stroke-opacity=".5">
+                <circle cx="240" cy="190" r="26" fill="none"/><circle cx="470" cy="120" r="26" fill="none"/><circle cx="740" cy="90" r="26" fill="none"/>
+              </g>
+              <text x="60" y="60" fill="#7e948d" font-family="ui-monospace, Menlo, monospace" font-size="17" letter-spacing="4">ALTITUDE → PITCH</text>
+            </svg>
+            <span class="badge">EXP 03 · 进行中</span>
+          </div>
+          <div class="card-body">
+            <h3>声音地形 <span class="en">Sound Terrain</span></h3>
+            <p>把一条山脊线的海拔，逐点翻译成音高：山有多高，声音就唱多高。喜马拉雅的一条真实轮廓，因此第一次可以被“听”完，而不是被看完。</p>
+            <div class="listen-row">
+              <button class="listen-btn" type="button" id="terrainPlay"><span class="dotp"></span><span id="terrainLabel">听这座山 · 沿山脊线播一遍</span></button>
+              <span class="listen-note">六个高度点，海拔 → 音高，站内实时合成，没有音频文件</span>
+            </div>
+            <div class="syy">
+              <b>身</b><span>行走采集轮廓，耳朵代替眼睛完成翻越。</span>
+              <b>语</b><span>地形是乐谱，高度差是旋律的起伏。</span>
+              <b>意</b><span>观看方式一变，同一座山就是另一座山。</span>
+            </div>
+            <p class="purpose"><b>这个互动的作用</b>换一种感官。<strong>把“看一座山”变成“听一座山”</strong>：点播放，六个高度点依次发声，音高就是海拔——三十秒验证一件事，观看方式一变，对象就变了。</p>
+            <div class="meta-row"><span>状态 · 进行中</span><span>数据 → 声音</span><span>Web Audio</span></div>
+          </div>
+        </article>
+
+        <!-- EXP 04 -->
+        <article class="card wide">
+          <div class="card-media" style="aspect-ratio:21/9;min-height:220px">
+            <svg viewBox="0 0 800 450" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+              <rect width="800" height="450" fill="#070d16"/>
+              <g fill="#bfe9ff">
+                <circle cx="120" cy="90" r="2.4"/><circle cx="230" cy="150" r="1.8"/><circle cx="330" cy="70" r="2.8"/>
+                <circle cx="430" cy="180" r="1.6"/><circle cx="540" cy="100" r="2.2"/><circle cx="640" cy="160" r="1.7"/>
+                <circle cx="720" cy="70" r="2.6"/><circle cx="180" cy="260" r="1.6"/><circle cx="380" cy="300" r="2"/>
+                <circle cx="590" cy="280" r="1.8"/><circle cx="90" cy="330" r="1.5"/><circle cx="700" cy="330" r="1.5"/>
+              </g>
+              <g stroke="#5fd3bf" stroke-opacity=".55" fill="none">
+                <path d="M120,90 L330,70 L540,100 L720,70"/>
+                <path d="M230,150 L430,180 L640,160"/>
+                <path d="M180,260 L380,300 L590,280"/>
+              </g>
+              <ellipse cx="400" cy="395" rx="330" ry="34" fill="#5fd3bf" opacity=".10"/>
+              <ellipse cx="400" cy="395" rx="220" ry="22" fill="#5fd3bf" opacity=".12"/>
+            </svg>
+            <span class="badge">EXP 04 · 已归档 v1</span>
+          </div>
+          <div class="card-body">
+            <h3>光尘星图 <span class="en">Light-Dust Atlas</span></h3>
+            <p>本站星图的前身：把实验室全部作品画成一张可以拖动的图，作品之间用“水流线”而不是菜单相连。它通过了测试，于是毕业——你现在正在用的星图，就是它的第二版。</p>
+            <div class="syy">
+              <b>身</b><span>拖动是手的行走，地图靠身体来读。</span>
+              <b>语</b><span>连线是水流：关系先于分类出现。</span>
+              <b>意</b><span>导航不该是目录，而该是一次进入。</span>
+            </div>
+            <p class="purpose"><b>这个互动的作用</b>它不用再玩了——<strong>它已经变成了这个网站本身</strong>：首页的星图就是它的第二版，拖动星图时用的正是从这里毕业的交互。这一条留着，是给“实验如何长成产品”存一份档案。</p>
+            <div class="meta-row"><span>状态 · 已毕业 → 星图 v2</span><span>交互原型</span><span>本站正在使用</span></div>
+          </div>
+        </article>
+      </div>
+
+      <nav class="next-row" aria-label="继续浏览">
+        <a href="../../index.html">← 回到星图<small>从水面重新进入任何一个区</small></a>
+        <a href="originals.html">去原创区 →<small>看实验如何长成一部作品：antmonologue</small></a>
+      </nav>
+    </main>
+
+    <footer>
+      <div class="foot">
+        <a class="mail" href="mailto:tbmax.in@hotmail.com?subject=NORVA%20STUDIO%20—%20合作咨询">tbmax.in@hotmail.com</a>
+        <small>NORVA STUDIO — AN OPEN CREATIVE SYSTEM · 微信 HMC-NORVA</small>
+      </div>
+    </footer>
+
+    <script>
+    (function(){
+      "use strict";
+      var reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+      /* ---------- EXP 01 · mini ripple ---------- */
+      var mini = document.getElementById("rippleMini");
+      if (mini){
+        var mctx = mini.getContext("2d");
+        var drops = [];
+        function sizeMini(){
+          var r = mini.parentElement.getBoundingClientRect();
+          mini.width = r.width; mini.height = r.height;
+        }
+        sizeMini(); window.addEventListener("resize", sizeMini);
+        var miniVisible = true;
+        if ("IntersectionObserver" in window){
+          new IntersectionObserver(function(en){ miniVisible = en[0].isIntersecting; }).observe(mini);
+        }
+        function paintMini(){
+          if (!reduceMotion) requestAnimationFrame(paintMini);
+          if (!miniVisible || document.hidden) return;
+          var w = mini.width, h = mini.height;
+          var g = mctx.createLinearGradient(0, 0, 0, h);
+          g.addColorStop(0, "#0c2434"); g.addColorStop(1, "#07302c");
+          mctx.fillStyle = g; mctx.fillRect(0, 0, w, h);
+          mctx.fillStyle = "rgba(234,246,255,.9)";
+          [[.18,.22,1.6],[.42,.14,1.2],[.66,.26,1.8],[.84,.16,1.3],[.3,.4,1.1],[.74,.44,1.2]].forEach(function(s){
+            mctx.beginPath(); mctx.arc(w*s[0], h*s[1], s[2], 0, Math.PI*2); mctx.fill();
+          });
+          mctx.strokeStyle = "rgba(95,211,191,1)";
+          drops = drops.filter(function(d){ return d.a > .015; });
+          drops.forEach(function(d){
+            d.r += 1.5; d.a *= .965;
+            for (var k = 0; k < 3; k++){
+              var rr = d.r - k * 11; if (rr <= 0) continue;
+              mctx.beginPath(); mctx.globalAlpha = Math.max(d.a * (1 - k * .3), 0); mctx.lineWidth = 1.6;
+              mctx.ellipse(d.x, d.y, rr * 1.7, rr * .62, 0, 0, Math.PI * 2); mctx.stroke();
+            }
+          });
+          mctx.globalAlpha = 1;
+          mctx.fillStyle = "rgba(223,245,238,.85)";
+          mctx.font = "11px ui-monospace, Menlo, monospace";
+          mctx.fillText("TOUCH THE WATER", 16, h - 16);
+        }
+        requestAnimationFrame(paintMini);
+        function miniDrop(e){
+          var r = mini.getBoundingClientRect();
+          drops.push({ x: e.clientX - r.left, y: e.clientY - r.top, r: 2, a: .8 });
+          if (drops.length > 30) drops.shift();
+        }
+        mini.addEventListener("pointerdown", miniDrop);
+        mini.addEventListener("pointermove", function(e){ if (e.buttons) miniDrop(e); });
+      }
+
+      /* ---------- EXP 03 · sound terrain ---------- */
+      var tBtn = document.getElementById("terrainPlay");
+      if (tBtn){
+        var tLabel = document.getElementById("terrainLabel");
+        var actx = null, tPlaying = false, tTimers = [];
+        var ALT = [70, 260, 160, 330, 200, 360];
+        function tStop(label){
+          tTimers.forEach(clearTimeout); tTimers = [];
+          tPlaying = false; tBtn.classList.remove("playing");
+          if (label) tLabel.textContent = label;
+          document.querySelectorAll(".tp").forEach(function(c){ c.classList.remove("on"); });
+          if (actx){ actx.close(); actx = null; }
+        }
+        tBtn.addEventListener("click", function(){
+          if (tPlaying){ tStop("听这座山 · 沿山脊线播一遍"); return; }
+          var AC = window.AudioContext || window.webkitAudioContext;
+          if (!AC){ tLabel.textContent = "这个浏览器不支持站内合成音频"; return; }
+          actx = new AC();
+          if (actx.state === "suspended") actx.resume();
+          tPlaying = true; tBtn.classList.add("playing");
+          tLabel.textContent = "正在播放 · 再点一次停下";
+          var master = actx.createGain(); master.gain.value = .16; master.connect(actx.destination);
+          ALT.forEach(function(a, i){
+            var f = 196 * Math.pow(2, (a / 360) * 1.5);
+            var t0 = actx.currentTime + .08 + i * .55;
+            var o = actx.createOscillator(); o.type = "sine"; o.frequency.value = f;
+            var g = actx.createGain();
+            g.gain.setValueAtTime(0, t0);
+            g.gain.linearRampToValueAtTime(.9, t0 + .06);
+            g.gain.exponentialRampToValueAtTime(.001, t0 + .85);
+            o.connect(g); g.connect(master); o.start(t0); o.stop(t0 + .9);
+            tTimers.push(setTimeout(function(){
+              document.querySelectorAll(".tp").forEach(function(c){
+                c.classList.toggle("on", +c.getAttribute("data-i") === i);
+              });
+            }, 80 + i * 550));
+          });
+          tTimers.push(setTimeout(function(){ tStop("再听一遍"); }, ALT.length * 550 + 600));
+        });
+      }
+    })();
+    </script>
+  </body>
+</html>

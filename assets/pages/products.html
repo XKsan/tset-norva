@@ -1,0 +1,212 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="color-scheme" content="light dark" />
+    <meta name="description" content="NORVA STUDIO — Products 产品：内容引擎、文档转换与整理、video_engine、HMC 心智观测、五项制作服务。" />
+    <link rel="icon" href="data:," />
+    <title>产品 Products — NORVA STUDIO</title>
+    <style>
+      :root{
+        --bg:#eef4f1; --bg-deep:#e2ece8; --panel:#ffffff; --panel-2:#e9f1ed;
+        --ink:#0f1f1a; --ink-2:#39534c; --muted:#6d847d; --line:rgba(15,31,26,.14);
+        --water:#0e7263; --water-deep:#0a4f46; --water-soft:rgba(14,114,99,.12);
+        --card-shadow:0 18px 44px rgba(13,42,36,.10);
+        --bar-bg:rgba(255,255,255,.86);
+        --serif:Georgia,"Times New Roman","Songti SC","STSong","Noto Serif SC",serif;
+        --serif-cn:"Songti SC","STSong","STKaiti","KaiTi","Noto Serif SC","SimSun",serif;
+        --mono:ui-monospace,"SF Mono",Menlo,Consolas,"Courier New",monospace;
+      }
+      @media (prefers-color-scheme: dark){
+        :root{
+          --bg:#04080c; --bg-deep:#02040a; --panel:#091119; --panel-2:#0c1722;
+          --ink:#eaf4ef; --ink-2:#b7cdc5; --muted:#7d948c; --line:rgba(234,244,239,.13);
+          --water:#5fd3bf; --water-deep:#8fe8d6; --water-soft:rgba(95,211,191,.10);
+          --card-shadow:0 18px 44px rgba(0,0,0,.5);
+          --bar-bg:rgba(6,13,19,.84);
+        }
+      }
+      *{box-sizing:border-box}
+      body{margin:0;background:var(--bg);color:var(--ink);letter-spacing:.012em;
+        font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei","Noto Sans SC",sans-serif;
+        -webkit-font-smoothing:antialiased;overflow-x:hidden}
+      a{color:inherit}
+      .mono{font-family:var(--mono)}
+      ::selection{background:var(--water);color:#fff}
+      :focus-visible{outline:2px solid var(--water);outline-offset:3px;border-radius:6px}
+      .topbar{position:fixed;top:0;left:0;right:0;z-index:70;display:flex;align-items:center;gap:14px;
+        padding:8px 16px;background:var(--bar-bg);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
+      .brand{font-family:var(--serif);font-size:17px;letter-spacing:.28em;font-weight:600;text-decoration:none;white-space:nowrap;padding:6px 2px}
+      .brand small{display:block;font-family:var(--mono);font-size:8.5px;letter-spacing:.3em;color:var(--muted);font-weight:400;margin-top:1px}
+      .topnav{display:flex;gap:2px;align-items:center;margin-left:auto;overflow-x:auto;scrollbar-width:none;max-width:100%}
+      .topnav::-webkit-scrollbar{display:none}
+      .topnav a{text-decoration:none;font-size:13px;letter-spacing:.05em;padding:9px 12px;border-radius:999px;color:var(--ink-2);white-space:nowrap;min-height:38px;display:inline-flex;align-items:center}
+      .topnav a:hover,.topnav a:focus-visible{background:var(--water-soft);color:var(--ink)}
+      .topnav a.on{background:var(--water-soft);color:var(--ink);font-weight:600}
+      .topnav a.cta{background:var(--water);color:#fff;font-weight:600}
+      @media (prefers-color-scheme: dark){.topnav a.cta{color:#04231c}}
+      main{max-width:1180px;margin:0 auto;padding:130px 22px 30px}
+      .sec-head{display:flex;align-items:baseline;gap:20px;flex-wrap:wrap;margin-bottom:16px}
+      .sec-index{font-size:12px;letter-spacing:.3em;color:var(--water)}
+      .sec-head h1{margin:0;font-family:var(--serif-cn);font-size:clamp(34px,6vw,58px);font-weight:900;letter-spacing:.03em;line-height:1.15}
+      .sec-head h1 .en{font-family:var(--serif);font-weight:500;letter-spacing:.1em}
+      .sec-lede{max-width:660px;color:var(--ink-2);line-height:2.05;font-size:16px;margin:0 0 34px;text-align:justify;text-justify:inter-ideograph}
+      .rule{height:1px;background:var(--line);margin:0 0 40px}
+      .grid{display:grid;grid-template-columns:repeat(12,1fr);gap:18px}
+      .card{grid-column:span 6;border:1px solid var(--line);border-radius:20px;background:var(--panel);overflow:hidden;box-shadow:var(--card-shadow);display:flex;flex-direction:column}
+      .card.wide{grid-column:span 12}
+      @media (max-width:820px){.card{grid-column:span 12}}
+      .card-body{padding:24px 24px 26px;display:flex;flex-direction:column;gap:12px;flex:1}
+      .card-body h3{margin:0;font-family:var(--serif-cn);font-size:21px;font-weight:900;letter-spacing:.02em;line-height:1.45}
+      .card-body h3 .en{font-family:var(--serif);letter-spacing:.06em;font-weight:500}
+      .card-body p{margin:0;color:var(--ink-2);line-height:1.95;font-size:14.5px}
+      .tag{display:inline-block;font-size:10.5px;letter-spacing:.16em;padding:4px 9px;border-radius:999px;border:1px solid var(--line);color:var(--muted);vertical-align:2px;margin-left:8px;font-family:inherit;font-weight:400}
+      .tag.live{color:var(--water);border-color:var(--water)}
+      .forwho{font-size:13px;color:var(--ink-2);line-height:1.75;background:var(--water-soft);border-radius:12px;padding:11px 14px;margin:0}
+      .forwho b{color:var(--water-deep);font-weight:600;letter-spacing:.1em;font-size:11.5px;margin-right:8px}
+      @media (prefers-color-scheme: dark){.forwho b{color:var(--water)}}
+      .fee-note{font-size:13px;color:var(--muted);border:1px dashed var(--line);border-radius:12px;padding:12px 14px;line-height:1.8;margin:0}
+      .card-cta{margin-top:14px;display:inline-flex;align-items:center;gap:8px;text-decoration:none;font-size:13.5px;font-weight:600;letter-spacing:.06em;color:var(--water);border:1px solid var(--water);border-radius:999px;padding:10px 18px;min-height:42px}
+      .card-cta:hover{background:var(--water-soft)}
+      details.sample{border:1px dashed var(--line);border-radius:12px;padding:4px 14px}
+      details.sample summary{cursor:pointer;font-size:13px;letter-spacing:.06em;color:var(--water-deep);padding:9px 0;list-style:none;font-weight:600;min-height:2.25rem}
+      @media (prefers-color-scheme: dark){details.sample summary{color:var(--water)}}
+      details.sample summary::-webkit-details-marker{display:none}
+      details.sample .sample-grid{display:grid;grid-template-columns:1fr 1fr;gap:6px 18px;padding:4px 0 12px}
+      @media (max-width:560px){details.sample .sample-grid{grid-template-columns:1fr}}
+      details.sample .sample-grid div{font-size:12.5px;color:var(--ink-2);line-height:1.7}
+      details.sample .sample-grid b{display:block;font-size:10.5px;letter-spacing:.18em;color:var(--muted);font-weight:500}
+      .purpose{border-top:1px solid var(--line);padding-top:12px;margin:2px 0 0;font-size:13px;line-height:1.85;color:var(--muted)}
+      .purpose b{display:inline-block;font-family:var(--mono);font-size:10.5px;letter-spacing:.22em;color:var(--water-deep);font-weight:500;margin-right:10px}
+      @media (prefers-color-scheme: dark){.purpose b{color:var(--water)}}
+      .purpose strong{color:var(--ink-2);font-weight:600}
+      .syy{display:grid;grid-template-columns:2.4em 1fr;gap:7px 14px;font-size:13.5px;line-height:1.75;color:var(--ink-2);border-top:1px dashed var(--line);padding-top:14px;margin-top:6px}
+      .syy b{color:var(--water);font-weight:600;letter-spacing:.2em;font-size:12px;padding-top:3px}
+      .meta-row{display:flex;gap:7px;flex-wrap:wrap;margin-top:auto;padding-top:6px}
+      .meta-row span{font-family:var(--mono);font-size:10.5px;letter-spacing:.05em;color:var(--muted);border:1px solid var(--line);border-radius:999px;padding:5px 11px}
+      .next-row{display:flex;gap:12px;flex-wrap:wrap;margin-top:26px}
+      .next-row a{flex:1 1 220px;text-decoration:none;border:1px solid var(--line);border-radius:16px;padding:16px 18px;background:var(--panel);font-size:15px;font-weight:600;box-shadow:var(--card-shadow)}
+      .next-row a small{display:block;color:var(--muted);margin-top:4px;font-size:12px;font-weight:400;line-height:1.7}
+      footer{margin-top:100px;border-top:1px solid var(--line);background:var(--bg-deep)}
+      .foot{max-width:1180px;margin:0 auto;padding:56px 22px 50px;text-align:center}
+      .foot a.mail{font-family:var(--mono);color:var(--water);text-decoration:none;font-size:16px}
+      .foot small{display:block;margin-top:22px;color:var(--muted);font-size:11.5px;letter-spacing:.14em;line-height:2}
+    </style>
+  </head>
+  <body>
+    <nav class="topbar" aria-label="站点导航">
+      <a class="brand" href="../../index.html">NORVA<small>STUDIO</small></a>
+      <div class="topnav">
+        <a href="../../index.html">首页 · 星图</a>
+        <a href="onething.html">今日一事</a>
+        <a href="experiments.html">实验</a>
+        <a href="originals.html">原创</a>
+        <a href="products.html" class="on">产品</a>
+        <a href="archive.html">档案</a>
+        <a href="method.html">方法</a>
+        <a href="projects.html">委托</a>
+        <a class="cta" href="contact.html">联系</a>
+      </div>
+    </nav>
+
+    <main>
+      <div class="sec-head">
+        <span class="sec-index mono">PRODUCTS</span>
+        <h1>产品 <span class="en">Products</span></h1>
+      </div>
+      <p class="sec-lede">实验室不只做作品，也长出了可以持续经营的产品。它们各自保留自己的销售渠道，家只有一个——就是这里：看懂它是什么、适合谁、下一步点哪里。费用与排期，通过微信私聊确认。</p>
+      <div class="rule"></div>
+
+      <div class="grid">
+        <article class="card">
+          <div class="card-body">
+            <h3>内容引擎 <span class="en">Content Engine</span><span class="tag live">运行中</span></h3>
+            <p>你给一个主题（可以附上品牌资料），第二天收到的是一整套写好的成品文案——一次覆盖 8 个平台，每天一套，不用你学任何工具，剩下的交给我们。</p>
+            <p class="forwho"><b>适合谁</b>有主题、要持续更新，但没时间天天写文案的品牌与个人。</p>
+            <details class="sample">
+              <summary>看一套样例（测试样例 · 真实样例随后替换）</summary>
+              <p class="purpose" style="border-top:0;padding-top:2px"><b>展开看什么</b>下单前先看清“一套”到底包含什么：<strong>一个主题进来，八个平台各出一版成品</strong>，不是同一段文字复制八遍。</p>
+              <div class="sample-grid">
+                <div><b>公众号</b>长文版：主题展开成一篇完整的讲述。</div>
+                <div><b>小红书</b>图文版：标题先行，短句分段，话题收尾。</div>
+                <div><b>朋友圈</b>短文版：三五句话，说清一件事。</div>
+                <div><b>INSTAGRAM</b>英文短文案，加一句视觉说明。</div>
+                <div><b>TIKTOK</b>口播脚本：钩子、展开、结尾各一行。</div>
+                <div><b>X</b>单条版：一句核心观点，不绕弯。</div>
+                <div><b>THREADS</b>串文版：一个观点拆成连续短帖。</div>
+                <div><b>YOUTUBE</b>短视频脚本：分镜与字幕要点齐全。</div>
+              </div>
+            </details>
+            <p class="fee-note">提供按天、按月、批量与按年四种预定方式，费用与排期微信私聊确认。每套含 1 次免费修改。</p>
+            <p style="font-size:13px;color:var(--muted)">主题必须由你给出——写什么，你定；怎么写，我们完成。</p>
+            <div><a class="card-cta" href="contact.html">下一步：微信 HMC-NORVA，给一个主题 →</a></div>
+          </div>
+        </article>
+
+        <article class="card">
+          <div class="card-body">
+            <h3>文档转换与整理 <span class="en">Document Converter</span><span class="tag live">运行中</span></h3>
+            <p>把散落的 PDF、Word、电子书、扫描件和图片，提取内容、OCR 识别、结构化整理，统一变成干净的 Markdown——可管理、可搜索，是喂给任何 AI 之前的那道预处理。</p>
+            <p class="forwho"><b>适合谁</b>手里攒了大量文档与扫描件，想整理成可搜索、能直接喂给 AI 的资料库的人。</p>
+            <p class="fee-note">按文件类型与页数计费，批量处理另有安排；费用微信私聊确认。</p>
+            <p style="font-size:13px;color:var(--muted)">卖的是内容提取＋结构化整理，不是格式互转。先发一份样本，看过效果再确认。</p>
+            <div><a class="card-cta" href="contact.html">下一步：微信发一份样本文件 →</a></div>
+          </div>
+        </article>
+
+        <article class="card">
+          <div class="card-body">
+            <h3>video_engine <span class="en">Video Engine</span><span class="tag">开发中</span></h3>
+            <p>实验室自己的影像管线：一段长视频进来，自动转写、按内容拆条、生成字幕、合成成片出去。它是 antmonologue 和内容后期服务背后的发动机，目前以委托项目的形式对外试跑。</p>
+            <p class="forwho"><b>适合谁</b>有长视频存量、想系统地拆成短内容的创作者、课程与机构。</p>
+            <div class="syy">
+              <b>身</b><span>真实长视频跑通全流程，才算数。</span>
+              <b>语</b><span>一条长内容，拆成许多条能传播的短内容。</span>
+              <b>意</b><span>先解决制作的重复劳动，再谈规模。</span>
+            </div>
+            <div class="meta-row"><span>状态 · 持续开发中</span><span>形态 · 实验室工具</span><span>承接 · 真实项目试跑</span></div>
+            <div><a class="card-cta" href="contact.html">下一步：拿一段真实长视频来试跑 →</a></div>
+          </div>
+        </article>
+
+        <article class="card">
+          <div class="card-body">
+            <h3>HMC 心智观测 <span class="en">Mind Observation</span><span class="tag">邀约制</span></h3>
+            <p>一套身语意智能观测系统：从身体、语言、意识三个层面，给出一次对自己的结构化观察。它不公开售卖——公开层只有<a href="onething.html" style="color:var(--water)">「今日一事」</a>，每天一条；深层观测需要体验码，一码一次。</p>
+            <p class="forwho"><b>适合谁</b>收到邀请的人。体验码经微信申请，一码一次，用完即止。</p>
+            <div class="syy">
+              <b>身</b><span>身体是入口：状态先被看见。</span>
+              <b>语</b><span>语言是路径：你怎么说，决定你怎么想。</span>
+              <b>意</b><span>意识是落点：观测的结论回到自己身上。</span>
+            </div>
+            <div class="meta-row"><span>状态 · 邀约制</span><span>体验码 · 一码一次</span><span>公开层 · 今日一事</span></div>
+            <div><a class="card-cta" href="contact.html">下一步：微信申请体验码 →</a></div>
+          </div>
+        </article>
+
+        <article class="card wide">
+          <div class="card-body">
+            <h3>五项制作服务 <span class="en">Studio Services</span><span class="tag live">接单中</span></h3>
+            <p>实验室的手艺部分：拍前先私聊确认需求与费用，定金 30%–50%，带水印预览确认，含 2 次免费修改，确认后交付无水印成片。费用按项目私聊确认。</p>
+            <p class="forwho"><b>适合谁</b>需求已经想清楚、想把一件片子认真做完的客户。</p>
+            <div class="meta-row"><span>01 · 短视频剪辑与制作</span><span>02 · 长视频拆条</span><span>03 · 字幕制作与校对</span><span>04 · AI 配音与音频后期</span><span>05 · 课程视频与播客后期</span></div>
+            <div><a class="card-cta" href="contact.html">下一步：微信说清你要做的那一件 →</a></div>
+          </div>
+        </article>
+      </div>
+
+      <nav class="next-row" aria-label="继续浏览">
+        <a href="originals.html">← 回原创区<small>产品背后的作品世界</small></a>
+        <a href="projects.html">去委托区 →<small>把你的想法放进同一条流程</small></a>
+      </nav>
+    </main>
+
+    <footer>
+      <div class="foot">
+        <a class="mail" href="mailto:tbmax.in@hotmail.com?subject=NORVA%20STUDIO%20—%20合作咨询">tbmax.in@hotmail.com</a>
+        <small>NORVA STUDIO — AN OPEN CREATIVE SYSTEM · 微信 HMC-NORVA</small>
+      </div>
+    </footer>
+  </body>
+</html>

@@ -1,0 +1,269 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="color-scheme" content="light dark" />
+    <meta name="description" content="NORVA STUDIO — 今日一事 ONETHING：一天知道这个世界上最值得知道的一件事，只显示当日一条。" />
+    <link rel="icon" href="data:," />
+    <title>今日一事 ONETHING — NORVA STUDIO</title>
+    <style>
+      :root{
+        --bg:#eef4f1; --bg-deep:#e2ece8; --panel:#ffffff; --panel-2:#e9f1ed;
+        --ink:#0f1f1a; --ink-2:#39534c; --muted:#6d847d; --line:rgba(15,31,26,.14);
+        --water:#0e7263; --water-deep:#0a4f46; --water-soft:rgba(14,114,99,.12);
+        --card-shadow:0 18px 44px rgba(13,42,36,.10);
+        --bar-bg:rgba(255,255,255,.86);
+        --serif:Georgia,"Times New Roman","Songti SC","STSong","Noto Serif SC",serif;
+        --serif-cn:"Songti SC","STSong","STKaiti","KaiTi","Noto Serif SC","SimSun",serif;
+        --mono:ui-monospace,"SF Mono",Menlo,Consolas,"Courier New",monospace;
+      }
+      @media (prefers-color-scheme: dark){
+        :root{
+          --bg:#04080c; --bg-deep:#02040a; --panel:#091119; --panel-2:#0c1722;
+          --ink:#eaf4ef; --ink-2:#b7cdc5; --muted:#7d948c; --line:rgba(234,244,239,.13);
+          --water:#5fd3bf; --water-deep:#8fe8d6; --water-soft:rgba(95,211,191,.10);
+          --card-shadow:0 18px 44px rgba(0,0,0,.5);
+          --bar-bg:rgba(6,13,19,.84);
+        }
+      }
+      *{box-sizing:border-box}
+      body{margin:0;background:var(--bg);color:var(--ink);letter-spacing:.012em;
+        font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei","Noto Sans SC",sans-serif;
+        -webkit-font-smoothing:antialiased;overflow-x:hidden}
+      a{color:inherit}
+      .mono{font-family:var(--mono)}
+      ::selection{background:var(--water);color:#fff}
+      :focus-visible{outline:2px solid var(--water);outline-offset:3px;border-radius:6px}
+      .topbar{position:fixed;top:0;left:0;right:0;z-index:70;display:flex;align-items:center;gap:14px;
+        padding:8px 16px;background:var(--bar-bg);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
+      .brand{font-family:var(--serif);font-size:17px;letter-spacing:.28em;font-weight:600;text-decoration:none;white-space:nowrap;padding:6px 2px}
+      .brand small{display:block;font-family:var(--mono);font-size:8.5px;letter-spacing:.3em;color:var(--muted);font-weight:400;margin-top:1px}
+      .topnav{display:flex;gap:2px;align-items:center;margin-left:auto;overflow-x:auto;scrollbar-width:none;max-width:100%}
+      .topnav::-webkit-scrollbar{display:none}
+      .topnav a{text-decoration:none;font-size:13px;letter-spacing:.05em;padding:9px 12px;border-radius:999px;color:var(--ink-2);white-space:nowrap;min-height:38px;display:inline-flex;align-items:center}
+      .topnav a:hover,.topnav a:focus-visible{background:var(--water-soft);color:var(--ink)}
+      .topnav a.on{background:var(--water-soft);color:var(--ink);font-weight:600}
+      .topnav a.cta{background:var(--water);color:#fff;font-weight:600}
+      @media (prefers-color-scheme: dark){.topnav a.cta{color:#04231c}}
+      main{max-width:1180px;margin:0 auto;padding:130px 22px 30px}
+      .sec-head{display:flex;align-items:baseline;gap:20px;flex-wrap:wrap;margin-bottom:16px}
+      .sec-index{font-size:12px;letter-spacing:.3em;color:var(--water)}
+      .sec-head h1{margin:0;font-family:var(--serif-cn);font-size:clamp(34px,6vw,58px);font-weight:900;letter-spacing:.03em;line-height:1.15}
+      .sec-head h1 .en{font-family:var(--serif);font-weight:500;letter-spacing:.1em}
+      .sec-lede{max-width:660px;color:var(--ink-2);line-height:2.05;font-size:16px;margin:0 0 34px;text-align:justify;text-justify:inter-ideograph}
+      .rule{height:1px;background:var(--line);margin:0 0 40px}
+      .btn{display:inline-flex;align-items:center;gap:8px;text-decoration:none;border-radius:999px;padding:12px 24px;font-size:14px;letter-spacing:.05em;border:1px solid var(--line);min-height:44px;cursor:pointer;background:transparent;color:inherit;font-family:inherit}
+      .btn.ghost{background:rgba(127,160,150,.08)}
+      .ot-card{border:1px solid var(--line);border-radius:24px;background:var(--panel);box-shadow:var(--card-shadow);padding:34px 30px}
+      .ot-main{display:flex;gap:28px;align-items:flex-start;flex-wrap:wrap}
+      .ot-dot-col{display:flex;flex-direction:column;align-items:center;gap:12px;flex:none}
+      .ot-dot{width:96px;height:96px;border-radius:50%;border:0;position:relative;cursor:pointer;font:inherit;
+        background:var(--otc,#007BA7);box-shadow:0 0 0 10px var(--water-soft),0 14px 34px rgba(0,0,0,.18);
+        transition:transform .3s;display:flex;align-items:center;justify-content:center;color:#fff}
+      .ot-dot:hover{transform:scale(1.06)}
+      .ot-dot::after{content:"";position:absolute;inset:-16px;border-radius:50%;border:1px solid var(--otc,#007BA7);opacity:.5;animation:pulse 3.6s ease-out infinite}
+      @keyframes pulse{0%{transform:scale(.92);opacity:.7}100%{transform:scale(1.25);opacity:0}}
+      .ot-dot span{font-size:12px;letter-spacing:.24em;font-weight:600}
+      .ot-dot-hint{font-size:11px;letter-spacing:.2em;color:var(--muted);text-align:center;line-height:1.9}
+      .ot-info{flex:1 1 320px;min-width:260px}
+      .ot-meta{font-size:11.5px;letter-spacing:.22em;color:var(--muted)}
+      .ot-meta b{color:var(--otc,#007BA7);font-weight:600}
+      .ot-body h2{margin:8px 0 12px;font-family:var(--serif-cn);font-weight:900;font-size:clamp(24px,3.8vw,34px);line-height:1.5;letter-spacing:.02em}
+      .ot-body p{margin:0 0 10px;color:var(--ink-2);line-height:1.95;font-size:15px;text-align:justify;text-justify:inter-ideograph}
+      .ot-body p b{color:var(--otc,#007BA7);letter-spacing:.14em;font-size:12px;margin-right:8px}
+      .ot-body p.ot-en{font-family:var(--serif);font-style:italic;font-size:18px;color:var(--muted);letter-spacing:.03em;margin:-4px 0 14px;text-align:left}
+      .ot-body p.ot-en-p{font-size:13.5px;color:var(--muted);line-height:1.8;font-style:italic;margin-top:-4px;text-align:left}
+      .ot-actions{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-top:18px}
+      .ot-actions .copied{font-size:12.5px;color:var(--water);letter-spacing:.06em}
+      .ot-note{margin-top:24px;border-top:1px dashed var(--line);padding-top:16px;font-size:13px;color:var(--muted);line-height:1.8}
+      .ot-card.reveal-pop .ot-body{animation:otpop .8s ease}
+      @keyframes otpop{0%{opacity:.25;transform:translateY(8px)}100%{opacity:1;transform:none}}
+      .next-row{display:flex;gap:12px;flex-wrap:wrap;margin-top:26px}
+      .next-row a{flex:1 1 220px;text-decoration:none;border:1px solid var(--line);border-radius:16px;padding:16px 18px;background:var(--panel);font-size:15px;font-weight:600;box-shadow:var(--card-shadow)}
+      .next-row a small{display:block;color:var(--muted);margin-top:4px;font-size:12px;font-weight:400;line-height:1.7}
+      footer{margin-top:100px;border-top:1px solid var(--line);background:var(--bg-deep)}
+      .foot{max-width:1180px;margin:0 auto;padding:56px 22px 50px;text-align:center}
+      .foot a.mail{font-family:var(--mono);color:var(--water);text-decoration:none;font-size:16px}
+      .foot small{display:block;margin-top:22px;color:var(--muted);font-size:11.5px;letter-spacing:.14em;line-height:2}
+      @media (prefers-reduced-motion: reduce){.ot-dot::after,.ot-card.reveal-pop .ot-body{animation:none}}
+    </style>
+  </head>
+  <body>
+    <nav class="topbar" aria-label="站点导航">
+      <a class="brand" href="../../index.html">NORVA<small>STUDIO</small></a>
+      <div class="topnav">
+        <a href="../../index.html">首页 · 星图</a>
+        <a href="onething.html" class="on">今日一事</a>
+        <a href="experiments.html">实验</a>
+        <a href="originals.html">原创</a>
+        <a href="products.html">产品</a>
+        <a href="archive.html">档案</a>
+        <a href="method.html">方法</a>
+        <a href="projects.html">委托</a>
+        <a class="cta" href="contact.html">联系</a>
+      </div>
+    </nav>
+
+    <main>
+      <div class="sec-head">
+        <span class="sec-index mono">ONETHING — DAILY</span>
+        <h1>今日一事 <span class="en">One Thing</span></h1>
+      </div>
+      <p class="sec-lede">一天知道这个世界上最值得知道的一件事。这里只显示当日这一条，不留历史记录——昨天那条过去了，就是过去了。主题涵盖宇宙、自然、科学、人、艺术、文化、时间、生命，以及科技与 AI。</p>
+      <div class="rule"></div>
+
+      <div class="ot-card" id="otCard" style="--otc:#007BA7" data-theme="life">
+        <div class="ot-main">
+          <div class="ot-dot-col">
+            <button class="ot-dot" id="otDot" type="button" aria-label="点圆点：重读今天这一条">
+              <span>今日</span>
+            </button>
+            <div class="ot-dot-hint">点圆点 · 重读这一条<br/>颜色 = 当日主题</div>
+          </div>
+          <div class="ot-info">
+            <div class="ot-meta mono"><span id="otDate">2026 年 11 月 24 日</span> · <b id="otCat">生命 · LIFE</b> · <span id="otId">OT-20261124-LIFE</span></div>
+            <div class="ot-body" id="otBody">
+              <h2 id="otTitle">章鱼实时编辑RNA</h2>
+              <p class="ot-en" id="otTitleEn">Octopuses Edit Their Own RNA</p>
+              <p><b>揭示</b><span id="otReveal">与大多数动物不同，章鱼在DNA转录后会大量编辑其RNA分子。这使它们能够根据环境实时微调蛋白质的产生。</span></p>
+              <p class="ot-en-p" id="otRevealEn">Unlike most animals, octopuses extensively edit their RNA molecules after they've been transcribed from DNA. This allows them to finely tune protein production in response to their environment, on the fly.</p>
+              <p><b>含义</b><span id="otMeaning">这种独特的生物机制提供了惊人的适应性，暗示了复杂智慧在僵硬基因代码之外的并行演化路径。</span></p>
+              <p class="ot-en-p" id="otMeaningEn">This unique biological mechanism offers incredible adaptability, hinting at a parallel evolutionary path for complex intelligence beyond rigid genetic code.</p>
+              <div class="ot-actions">
+                <button class="btn ghost" type="button" id="otSave">保存这一条</button>
+                <button class="btn ghost" type="button" id="otCopy">复制分享</button>
+                <span class="copied" id="otCopied" aria-live="polite"></span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <p class="ot-note">公开的，是每天这一条。更深一层的观测是另一个系统——HMC 心智观测，邀约制，在<a href="products.html" style="color:var(--water)">产品页</a>里说明。</p>
+      </div>
+
+      <nav class="next-row" aria-label="继续浏览">
+        <a href="../../index.html">← 回到星图<small>从水面重新进入任何一个区</small></a>
+        <a href="experiments.html">去实验区 →<small>四件实验，第一块水面可以直接玩</small></a>
+      </nav>
+    </main>
+
+    <footer>
+      <div class="foot">
+        <a class="mail" href="mailto:tbmax.in@hotmail.com?subject=NORVA%20STUDIO%20—%20合作咨询">tbmax.in@hotmail.com</a>
+        <small>NORVA STUDIO — AN OPEN CREATIVE SYSTEM · 微信 HMC-NORVA</small>
+      </div>
+    </footer>
+
+    <script>
+    (function(){
+      "use strict";
+      /* ONETHING daily module — reads ../onething/today.json (relative to this
+         page: assets/onething/today.json). Only today's entry is ever shown. */
+      var OT_VISUAL_SYSTEMS = {
+        COSMOS:  { theme: "cosmos",  color: "#7B8CFF", zh: "宇宙" },
+        NATURE:  { theme: "nature",  color: "#7FD6A4", zh: "自然" },
+        SCIENCE: { theme: "science", color: "#6FD8FF", zh: "科学" },
+        HUMAN:   { theme: "human",   color: "#E0A978", zh: "人" },
+        ART:     { theme: "art",     color: "#C49BFF", zh: "艺术" },
+        CULTURE: { theme: "culture", color: "#D7B98A", zh: "文化" },
+        TIME:    { theme: "time",    color: "#AEB8C8", zh: "时间" },
+        LIFE:    { theme: "life",    color: "#91E6C1", zh: "生命" },
+        AI:      { theme: "ai",      color: "#9DB8FF", zh: "科技与 AI" }
+      };
+      var OT_FALLBACK = {
+        id: "fallback", category: "COSMOS",
+        title_en: "THE SUN IS NOT YELLOW", title_zh: "太阳其实不是黄色的",
+        reveal_en: "From space, the Sun appears white. Earth's atmosphere changes the color we experience from the ground.",
+        reveal_zh: "从太空看，太阳其实呈现白色。地球大气层改变了我们从地面看到的颜色。",
+        meaning_en: "Reality can change with the distance between what exists and what we perceive.",
+        meaning_zh: "我们看到的现实，往往受到观察距离和方式的影响。",
+        visual: { theme: "cosmos", color: "#7B8CFF" }
+      };
+      var otCard = document.getElementById("otCard");
+      var otData = null;
+      var otCopied = document.getElementById("otCopied");
+      function otNormalize(source){
+        source = source || {};
+        return {
+          id: source.id || "one-thing",
+          category: source.category || "COSMOS",
+          title_en: source.title_en || "", title_zh: source.title_zh || "",
+          reveal_en: source.reveal_en || "", reveal_zh: source.reveal_zh || "",
+          meaning_en: source.meaning_en || "", meaning_zh: source.meaning_zh || "",
+          visual: source.visual || { theme: "cosmos", color: "#ffffff" },
+          generated_at: source.generated_at || ""
+        };
+      }
+      function otVisualSystem(){
+        var category = String((otData && otData.category) || "COSMOS").toUpperCase();
+        var preset = OT_VISUAL_SYSTEMS[category] || OT_VISUAL_SYSTEMS.COSMOS;
+        var suppliedColor = otData && otData.visual && otData.visual.color;
+        var suppliedTheme = String((otData && otData.visual && otData.visual.theme) || "").toLowerCase();
+        var color = (typeof suppliedColor === "string" && /^#[0-9a-fA-F]{6}$/.test(suppliedColor.trim())) ? suppliedColor.trim() : preset.color;
+        var allowed = {};
+        Object.keys(OT_VISUAL_SYSTEMS).forEach(function(k){ allowed[OT_VISUAL_SYSTEMS[k].theme] = true; });
+        var theme = allowed[suppliedTheme] ? suppliedTheme : preset.theme;
+        return { theme: theme, color: color, zh: preset.zh || category };
+      }
+      function otRender(){
+        if (!otData) return;
+        var v = otVisualSystem();
+        otCard.style.setProperty("--otc", v.color);
+        otCard.setAttribute("data-theme", v.theme);
+        var catKey = String(otData.category || "COSMOS").toUpperCase();
+        document.getElementById("otCat").textContent = v.zh + " · " + catKey;
+        document.getElementById("otId").textContent = otData.id || "";
+        var dstr = "";
+        if (otData.generated_at){
+          var d = new Date(otData.generated_at);
+          if (!isNaN(d.getTime())) dstr = d.getFullYear() + " 年 " + (d.getMonth() + 1) + " 月 " + d.getDate() + " 日";
+        }
+        document.getElementById("otDate").textContent = dstr || "今日";
+        document.getElementById("otTitle").textContent = otData.title_zh || otData.title_en || "";
+        document.getElementById("otTitleEn").textContent = otData.title_en || "";
+        document.getElementById("otReveal").textContent = otData.reveal_zh || "";
+        document.getElementById("otRevealEn").textContent = otData.reveal_en || "";
+        document.getElementById("otMeaning").textContent = otData.meaning_zh || "";
+        document.getElementById("otMeaningEn").textContent = otData.meaning_en || "";
+      }
+      fetch("../onething/today.json?v=" + Date.now(), { cache: "no-store" })
+        .then(function(r){ if (!r.ok) throw new Error(r.status); return r.json(); })
+        .then(function(j){ otData = otNormalize(j); otRender(); })
+        .catch(function(){ otData = otNormalize(OT_FALLBACK); otRender(); });
+      function otShareText(){
+        return otData.title_en + "\n" + otData.title_zh + "\n\n" + otData.reveal_en + "\n" + otData.reveal_zh + "\n\n" + otData.meaning_en + "\n" + otData.meaning_zh + "\n\n— ONE THING / NORVA STUDIO";
+      }
+      document.getElementById("otCopy").addEventListener("click", function(){
+        if (!otData) return;
+        var text = otShareText();
+        function done(){ otCopied.textContent = "已复制，可以分享了。"; }
+        function copyFallback(){
+          if (navigator.clipboard && navigator.clipboard.writeText){
+            navigator.clipboard.writeText(text).then(done, function(){ otCopied.textContent = "复制失败，长按文字手动复制。"; });
+          } else {
+            var ta = document.createElement("textarea");
+            ta.value = text; document.body.appendChild(ta); ta.select();
+            try { document.execCommand("copy"); done(); } catch (err) { otCopied.textContent = "复制失败，长按文字手动复制。"; }
+            document.body.removeChild(ta);
+          }
+        }
+        if (navigator.share){ navigator.share({ title: "ONE THING", text: text }).catch(function(){}); }
+        else copyFallback();
+      });
+      document.getElementById("otDot").addEventListener("click", function(){
+        otCard.classList.remove("reveal-pop"); void otCard.offsetWidth; otCard.classList.add("reveal-pop");
+      });
+      document.getElementById("otSave").addEventListener("click", function(){
+        if (!otData) return;
+        var blob = new Blob([otShareText()], { type: "text/plain;charset=utf-8" });
+        var url = URL.createObjectURL(blob);
+        var a = document.createElement("a");
+        a.href = url; a.download = (otData.id || "one-thing") + ".txt";
+        document.body.appendChild(a); a.click(); document.body.removeChild(a);
+        setTimeout(function(){ URL.revokeObjectURL(url); }, 2000);
+        otCopied.textContent = "已保存为文本文件。";
+      });
+    })();
+    </script>
+  </body>
+</html>

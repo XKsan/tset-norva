@@ -1,0 +1,264 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="color-scheme" content="light dark" />
+    <meta name="description" content="NORVA STUDIO — Archive 档案：放映室（长片站外托管、站内播放器观看）与归山行走记录。" />
+    <link rel="icon" href="data:," />
+    <title>档案 Archive — NORVA STUDIO</title>
+    <style>
+      :root{
+        --bg:#eef4f1; --bg-deep:#e2ece8; --panel:#ffffff; --panel-2:#e9f1ed;
+        --ink:#0f1f1a; --ink-2:#39534c; --muted:#6d847d; --line:rgba(15,31,26,.14);
+        --water:#0e7263; --water-deep:#0a4f46; --water-soft:rgba(14,114,99,.12);
+        --card-shadow:0 18px 44px rgba(13,42,36,.10);
+        --bar-bg:rgba(255,255,255,.86);
+        --serif:Georgia,"Times New Roman","Songti SC","STSong","Noto Serif SC",serif;
+        --serif-cn:"Songti SC","STSong","STKaiti","KaiTi","Noto Serif SC","SimSun",serif;
+        --mono:ui-monospace,"SF Mono",Menlo,Consolas,"Courier New",monospace;
+      }
+      @media (prefers-color-scheme: dark){
+        :root{
+          --bg:#04080c; --bg-deep:#02040a; --panel:#091119; --panel-2:#0c1722;
+          --ink:#eaf4ef; --ink-2:#b7cdc5; --muted:#7d948c; --line:rgba(234,244,239,.13);
+          --water:#5fd3bf; --water-deep:#8fe8d6; --water-soft:rgba(95,211,191,.10);
+          --card-shadow:0 18px 44px rgba(0,0,0,.5);
+          --bar-bg:rgba(6,13,19,.84);
+        }
+      }
+      *{box-sizing:border-box}
+      body{margin:0;background:var(--bg);color:var(--ink);letter-spacing:.012em;
+        font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei","Noto Sans SC",sans-serif;
+        -webkit-font-smoothing:antialiased;overflow-x:hidden}
+      a{color:inherit}
+      .mono{font-family:var(--mono)}
+      ::selection{background:var(--water);color:#fff}
+      :focus-visible{outline:2px solid var(--water);outline-offset:3px;border-radius:6px}
+      .topbar{position:fixed;top:0;left:0;right:0;z-index:70;display:flex;align-items:center;gap:14px;
+        padding:8px 16px;background:var(--bar-bg);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
+      .brand{font-family:var(--serif);font-size:17px;letter-spacing:.28em;font-weight:600;text-decoration:none;white-space:nowrap;padding:6px 2px}
+      .brand small{display:block;font-family:var(--mono);font-size:8.5px;letter-spacing:.3em;color:var(--muted);font-weight:400;margin-top:1px}
+      .topnav{display:flex;gap:2px;align-items:center;margin-left:auto;overflow-x:auto;scrollbar-width:none;max-width:100%}
+      .topnav::-webkit-scrollbar{display:none}
+      .topnav a{text-decoration:none;font-size:13px;letter-spacing:.05em;padding:9px 12px;border-radius:999px;color:var(--ink-2);white-space:nowrap;min-height:38px;display:inline-flex;align-items:center}
+      .topnav a:hover,.topnav a:focus-visible{background:var(--water-soft);color:var(--ink)}
+      .topnav a.on{background:var(--water-soft);color:var(--ink);font-weight:600}
+      .topnav a.cta{background:var(--water);color:#fff;font-weight:600}
+      @media (prefers-color-scheme: dark){.topnav a.cta{color:#04231c}}
+      main{max-width:1180px;margin:0 auto;padding:130px 22px 30px}
+      .sec-head{display:flex;align-items:baseline;gap:20px;flex-wrap:wrap;margin-bottom:16px}
+      .sec-index{font-size:12px;letter-spacing:.3em;color:var(--water)}
+      .sec-head h1{margin:0;font-family:var(--serif-cn);font-size:clamp(34px,6vw,58px);font-weight:900;letter-spacing:.03em;line-height:1.15}
+      .sec-head h1 .en{font-family:var(--serif);font-weight:500;letter-spacing:.1em}
+      .sec-lede{max-width:660px;color:var(--ink-2);line-height:2.05;font-size:16px;margin:0 0 34px;text-align:justify;text-justify:inter-ideograph}
+      .sec-lede strong{color:var(--ink)}
+      .rule{height:1px;background:var(--line);margin:0 0 40px}
+      .screen-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:18px}
+      @media (max-width:820px){.screen-grid{grid-template-columns:1fr}}
+      .card{border:1px solid var(--line);border-radius:20px;background:var(--panel);overflow:hidden;box-shadow:var(--card-shadow);display:flex;flex-direction:column}
+      .card-media{position:relative;aspect-ratio:16/9;overflow:hidden;background:var(--panel-2)}
+      .card-media svg{position:absolute;inset:0;width:100%;height:100%}
+      .card-media .badge{position:absolute;left:14px;top:14px;z-index:2;font-size:10.5px;letter-spacing:.18em;padding:5px 10px;border-radius:999px;background:rgba(70,52,8,.6);color:#ffe9b0;backdrop-filter:blur(4px)}
+      .playbtn{position:absolute;right:16px;bottom:16px;z-index:2;width:58px;height:58px;border-radius:50%;border:0;cursor:pointer;background:var(--water);color:#fff;display:flex;align-items:center;justify-content:center;box-shadow:0 10px 26px rgba(0,0,0,.3);transition:transform .25s}
+      .playbtn:hover{transform:scale(1.08)}
+      @media (prefers-color-scheme: dark){.playbtn{color:#04231c}}
+      .playbtn svg{width:22px;height:22px;fill:currentColor;margin-left:3px}
+      .card-body{padding:24px 24px 26px;display:flex;flex-direction:column;gap:12px;flex:1}
+      .card-body h3{margin:0;font-family:var(--serif-cn);font-size:21px;font-weight:900;letter-spacing:.02em;line-height:1.45}
+      .card-body h3 .en{font-family:var(--serif);letter-spacing:.06em;font-weight:500}
+      .card-body p{margin:0;color:var(--ink-2);line-height:1.95;font-size:14.5px}
+      .meta-row{display:flex;gap:7px;flex-wrap:wrap;margin-top:auto;padding-top:6px}
+      .meta-row span{font-family:var(--mono);font-size:10.5px;letter-spacing:.05em;color:var(--muted);border:1px solid var(--line);border-radius:999px;padding:5px 11px}
+      .pipeline{display:flex;flex-direction:column}
+      .pipe-step{display:flex;gap:16px;padding:18px 4px;border-bottom:1px dashed var(--line)}
+      .pipe-step:last-child{border-bottom:0}
+      .pipe-step .n{font-family:var(--mono);color:var(--water);font-size:13px;padding-top:2px}
+      .pipe-step h4{margin:0 0 4px;font-size:15.5px}
+      .pipe-step p{margin:0;color:var(--ink-2);font-size:13.5px;line-height:1.85}
+      .feature{border:1px solid var(--line);border-radius:24px;overflow:hidden;background:var(--panel);box-shadow:var(--card-shadow);margin-top:18px}
+      .feature-body{padding:32px 28px 34px}
+      .feature-body h2{margin:0 0 4px;font-size:clamp(22px,3.6vw,32px)}
+      .feature-body h2 .en{font-family:var(--serif);font-weight:500}
+      .feature-body p{color:var(--ink-2);line-height:2;font-size:15px;margin:10px 0 0;text-align:justify;text-justify:inter-ideograph}
+      .tag{display:inline-block;font-size:10.5px;letter-spacing:.16em;padding:4px 9px;border-radius:999px;border:1px solid var(--line);color:var(--muted);vertical-align:2px;margin-left:8px}
+      .growth{display:flex;gap:0;margin-top:22px;flex-wrap:wrap}
+      .growth div{flex:1 1 120px;border-top:2px solid var(--water-soft);padding:12px 12px 0 0;font-size:12.5px;color:var(--muted)}
+      .growth div.on{border-top-color:var(--water);color:var(--ink)}
+      .growth b{display:block;font-size:13px;margin-bottom:3px}
+      .card-cta{margin-top:20px;display:inline-flex;align-items:center;gap:8px;text-decoration:none;font-size:13.5px;font-weight:600;letter-spacing:.06em;color:var(--water);border:1px solid var(--water);border-radius:999px;padding:10px 18px;min-height:42px}
+      .card-cta:hover{background:var(--water-soft)}
+      .next-row{display:flex;gap:12px;flex-wrap:wrap;margin-top:26px}
+      .next-row a{flex:1 1 220px;text-decoration:none;border:1px solid var(--line);border-radius:16px;padding:16px 18px;background:var(--panel);font-size:15px;font-weight:600;box-shadow:var(--card-shadow)}
+      .next-row a small{display:block;color:var(--muted);margin-top:4px;font-size:12px;font-weight:400;line-height:1.7}
+      footer{margin-top:100px;border-top:1px solid var(--line);background:var(--bg-deep)}
+      .foot{max-width:1180px;margin:0 auto;padding:56px 22px 50px;text-align:center}
+      .foot a.mail{font-family:var(--mono);color:var(--water);text-decoration:none;font-size:16px}
+      .foot small{display:block;margin-top:22px;color:var(--muted);font-size:11.5px;letter-spacing:.14em;line-height:2}
+      .modal{position:fixed;inset:0;z-index:90;display:none;align-items:center;justify-content:center;padding:18px;background:rgba(2,8,10,.82);backdrop-filter:blur(8px)}
+      .modal.open{display:flex}
+      .modal-box{width:min(960px,100%);background:#060d12;border:1px solid rgba(255,255,255,.14);border-radius:18px;overflow:hidden;box-shadow:0 30px 80px rgba(0,0,0,.6)}
+      .modal-head{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:14px 18px;color:#e8f4f0}
+      .modal-head h3{margin:0;font-size:15.5px;font-weight:600;letter-spacing:.04em}
+      .modal-head p{margin:3px 0 0;font-size:12px;color:#8fb3a8;letter-spacing:.06em}
+      .modal-close{flex:none;width:40px;height:40px;border-radius:50%;border:1px solid rgba(255,255,255,.25);background:transparent;color:#fff;font-size:18px;cursor:pointer}
+      .modal-frame{position:relative;aspect-ratio:16/9;background:#000}
+      .modal-frame video{position:absolute;inset:0;width:100%;height:100%;border:0}
+      .modal-note{padding:12px 18px 16px;color:#8fb3a8;font-size:12.5px;line-height:1.8}
+    </style>
+  </head>
+  <body>
+    <nav class="topbar" aria-label="站点导航">
+      <a class="brand" href="../../index.html">NORVA<small>STUDIO</small></a>
+      <div class="topnav">
+        <a href="../../index.html">首页 · 星图</a>
+        <a href="onething.html">今日一事</a>
+        <a href="experiments.html">实验</a>
+        <a href="originals.html">原创</a>
+        <a href="products.html">产品</a>
+        <a href="archive.html" class="on">档案</a>
+        <a href="method.html">方法</a>
+        <a href="projects.html">委托</a>
+        <a class="cta" href="contact.html">联系</a>
+      </div>
+    </nav>
+
+    <main>
+      <div class="sec-head">
+        <span class="sec-index mono">ARCHIVE — SCREENING &amp; PRACTICE</span>
+        <h1>档案 <span class="en">Archive</span></h1>
+      </div>
+      <p class="sec-lede">档案区装两样东西：一是放映室——纪录片与长记录视频动辄 1G 以上，不住在网站里，片源站外托管、站内播放器观看，档案留在站内；二是行走记录——归山以影像的形式住在这里，作为身语意的一场实践，而不是一件产品。</p>
+      <div class="rule"></div>
+
+      <div class="screen-grid">
+        <article class="card">
+          <div class="card-media">
+            <svg viewBox="0 0 800 450" preserveAspectRatio="xMidYMid slice" role="img" aria-label="长片测试画面：河谷与行走的人">
+              <defs>
+                <linearGradient id="valley" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0" stop-color="#b8cdd6"/><stop offset=".55" stop-color="#7fa3ad"/><stop offset="1" stop-color="#3c5a5e"/>
+                </linearGradient>
+              </defs>
+              <rect width="800" height="450" fill="url(#valley)"/>
+              <path d="M0,300 L200,150 L360,260 L520,120 L800,280 L800,450 L0,450 Z" fill="#22333a" opacity=".82"/>
+              <path d="M0,450 C200,380 300,430 460,392 C600,360 700,404 800,378 L800,450 Z" fill="#16211f"/>
+              <path d="M120,450 C260,398 380,420 520,398" stroke="#5fd3bf" stroke-width="3" fill="none" opacity=".8"/>
+              <circle cx="392" cy="392" r="6" fill="#f2f6f3"/>
+              <path d="M392,398 L388,416 M392,404 L404,410" stroke="#f2f6f3" stroke-width="3.4" stroke-linecap="round"/>
+            </svg>
+            <span class="badge">测试素材 · 长片架构演示</span>
+            <button class="playbtn" type="button" data-play="field" aria-label="在站内播放器观看长片（测试素材）">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3.8v16.4c0 .9 1 1.5 1.8 1L21 13a1.2 1.2 0 0 0 0-2L7.8 2.9C7 2.4 6 2.9 6 3.8z"/></svg>
+            </button>
+          </div>
+          <div class="card-body">
+            <h3>河谷行走 · 长记录 <span class="en">Field Record</span></h3>
+            <p>一部长时记录的占位演示：原始文件大于 1G，不进入网站仓库。点播放后，站内播放器才从站外托管加载片源——打开页面时，一秒视频流量都不会浪费。</p>
+            <div class="meta-row"><span>形式 · 纪录 / 长记录</span><span>片源 · 站外托管</span><span>播放 · 站内播放器 · 点击加载</span></div>
+          </div>
+        </article>
+
+        <div class="card">
+          <div class="card-body" style="padding:26px 24px">
+            <h3 style="font-size:19px">长片如何住进这个网站</h3>
+            <div class="pipeline">
+              <div class="pipe-step"><span class="n">01</span><div>
+                <h4>原始文件不上站</h4>
+                <p>1G 以上的原片留在本地与云端档案里。静态站有体积上限，硬塞只会让所有人打不开。</p>
+              </div></div>
+              <div class="pipe-step"><span class="n">02</span><div>
+                <h4>站外托管，按需分发</h4>
+                <p>成片上传到视频托管（中立托管优先，Bilibili / YouTube 作分发镜像），由托管方做多码率转码与全球分发，画质与速度不由网站服务器硬扛。</p>
+              </div></div>
+              <div class="pipe-step"><span class="n">03</span><div>
+                <h4>站内播放器，点击才加载</h4>
+                <p>页面里只有海报、标题与一行档案信息；点播放后才唤起播放器加载站外片源。观看体验在站内完成，流量成本留在站外。</p>
+              </div></div>
+              <div class="pipe-step"><span class="n">04</span><div>
+                <h4>档案留在站内</h4>
+                <p>拍摄地、年份、时长、身语意三行笔记永久留在 Archive——片源平台会变，档案不换地方。</p>
+              </div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <article class="feature">
+        <div class="feature-body">
+          <div>
+            <h2>归山 · 行走记录 <span class="en">A Walking Practice</span><span class="tag">实践记录</span></h2>
+            <p>城市归山与 NORVA 的关系，不在产品上，在方法上：它就是身语意活出来的样子——<strong>身</strong>是行走，真实地走完一段路；<strong>语</strong>是影像，把走过的路拍下来、讲出来；<strong>意</strong>是观察，在行走里重新看自己和城市。所以它的行走记录、摄影与短片进档案区，按作品的标准陈列。</p>
+            <p>它本身（路线、场次、报名）不在这个站里，仍在归山自己的站运行。这里只保存它留下的影像，之后随每次行走继续入档。</p>
+            <div class="growth" aria-label="归山实践的三层">
+              <div class="on"><b>身 · 行走</b>城市与山地，真实到场</div>
+              <div class="on"><b>语 · 影像</b>摄影与短片记录</div>
+              <div class="on"><b>意 · 观察</b>行走中的观看笔记</div>
+              <div><b>入档</b>随行走持续积累</div>
+            </div>
+            <div><a class="card-cta" href="https://xksan.github.io/himalaya-core-go/" target="_blank" rel="noopener">去归山的站看路线与场次 →</a></div>
+          </div>
+        </div>
+      </article>
+
+      <nav class="next-row" aria-label="继续浏览">
+        <a href="products.html">← 回产品区<small>档案里的方法，产品里在运行</small></a>
+        <a href="method.html">去方法页 →<small>身 · 语 · 意，NORVA 做事的方式</small></a>
+      </nav>
+    </main>
+
+    <footer>
+      <div class="foot">
+        <a class="mail" href="mailto:tbmax.in@hotmail.com?subject=NORVA%20STUDIO%20—%20合作咨询">tbmax.in@hotmail.com</a>
+        <small>NORVA STUDIO — AN OPEN CREATIVE SYSTEM · 微信 HMC-NORVA</small>
+      </div>
+    </footer>
+
+    <div class="modal" id="playerModal" role="dialog" aria-modal="true" aria-labelledby="playerTitle">
+      <div class="modal-box">
+        <div class="modal-head">
+          <div>
+            <h3 id="playerTitle">河谷行走 · 长记录（测试素材）</h3>
+            <p id="playerSub">长片架构 · 原始文件 1G+ 不入站 · 站外托管分发</p>
+          </div>
+          <button class="modal-close" type="button" id="playerClose" aria-label="关闭播放器">✕</button>
+        </div>
+        <div class="modal-frame" id="playerFrame"></div>
+        <p class="modal-note">长片演示：页面只存海报与档案，点播放后才从站外托管加载片源。正式长片将使用中立托管分发，Bilibili / YouTube 作镜像。</p>
+      </div>
+    </div>
+
+    <script>
+    (function(){
+      "use strict";
+      var modal = document.getElementById("playerModal");
+      var frame = document.getElementById("playerFrame");
+      var lastFocus = null;
+      function openPlayer(){
+        lastFocus = document.activeElement;
+        frame.innerHTML = "";
+        var v = document.createElement("video");
+        v.src = "https://storage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4";
+        v.controls = true; v.autoplay = true; v.playsInline = true;
+        v.setAttribute("preload", "metadata");
+        frame.appendChild(v);
+        modal.classList.add("open");
+        document.body.style.overflow = "hidden";
+        document.getElementById("playerClose").focus();
+      }
+      function closePlayer(){
+        modal.classList.remove("open");
+        frame.innerHTML = "";
+        document.body.style.overflow = "";
+        if (lastFocus) lastFocus.focus();
+      }
+      document.querySelectorAll("[data-play]").forEach(function(btn){
+        btn.addEventListener("click", openPlayer);
+      });
+      document.getElementById("playerClose").addEventListener("click", closePlayer);
+      modal.addEventListener("click", function(e){ if (e.target === modal) closePlayer(); });
+      document.addEventListener("keydown", function(e){ if (e.key === "Escape" && modal.classList.contains("open")) closePlayer(); });
+    })();
+    </script>
+  </body>
+</html>

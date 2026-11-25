@@ -1,0 +1,147 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="color-scheme" content="light dark" />
+    <meta name="description" content="NORVA STUDIO — 联系 Contact：正式合作与委托走邮件 tbmax.in@hotmail.com，产品咨询与体验码走微信 HMC-NORVA。" />
+    <link rel="icon" href="data:," />
+    <title>联系 Contact — NORVA STUDIO</title>
+    <style>
+      :root{
+        --bg:#eef4f1; --bg-deep:#e2ece8; --panel:#ffffff; --panel-2:#e9f1ed;
+        --ink:#0f1f1a; --ink-2:#39534c; --muted:#6d847d; --line:rgba(15,31,26,.14);
+        --water:#0e7263; --water-deep:#0a4f46; --water-soft:rgba(14,114,99,.12);
+        --card-shadow:0 18px 44px rgba(13,42,36,.10);
+        --bar-bg:rgba(255,255,255,.86);
+        --serif:Georgia,"Times New Roman","Songti SC","STSong","Noto Serif SC",serif;
+        --serif-cn:"Songti SC","STSong","STKaiti","KaiTi","Noto Serif SC","SimSun",serif;
+        --mono:ui-monospace,"SF Mono",Menlo,Consolas,"Courier New",monospace;
+      }
+      @media (prefers-color-scheme: dark){
+        :root{
+          --bg:#04080c; --bg-deep:#02040a; --panel:#091119; --panel-2:#0c1722;
+          --ink:#eaf4ef; --ink-2:#b7cdc5; --muted:#7d948c; --line:rgba(234,244,239,.13);
+          --water:#5fd3bf; --water-deep:#8fe8d6; --water-soft:rgba(95,211,191,.10);
+          --card-shadow:0 18px 44px rgba(0,0,0,.5);
+          --bar-bg:rgba(6,13,19,.84);
+        }
+      }
+      *{box-sizing:border-box}
+      body{margin:0;background:var(--bg);color:var(--ink);letter-spacing:.012em;
+        font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei","Noto Sans SC",sans-serif;
+        -webkit-font-smoothing:antialiased;overflow-x:hidden}
+      a{color:inherit}
+      .mono{font-family:var(--mono)}
+      ::selection{background:var(--water);color:#fff}
+      :focus-visible{outline:2px solid var(--water);outline-offset:3px;border-radius:6px}
+      .topbar{position:fixed;top:0;left:0;right:0;z-index:70;display:flex;align-items:center;gap:14px;
+        padding:8px 16px;background:var(--bar-bg);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
+      .brand{font-family:var(--serif);font-size:17px;letter-spacing:.28em;font-weight:600;text-decoration:none;white-space:nowrap;padding:6px 2px}
+      .brand small{display:block;font-family:var(--mono);font-size:8.5px;letter-spacing:.3em;color:var(--muted);font-weight:400;margin-top:1px}
+      .topnav{display:flex;gap:2px;align-items:center;margin-left:auto;overflow-x:auto;scrollbar-width:none;max-width:100%}
+      .topnav::-webkit-scrollbar{display:none}
+      .topnav a{text-decoration:none;font-size:13px;letter-spacing:.05em;padding:9px 12px;border-radius:999px;color:var(--ink-2);white-space:nowrap;min-height:38px;display:inline-flex;align-items:center}
+      .topnav a:hover,.topnav a:focus-visible{background:var(--water-soft);color:var(--ink)}
+      .topnav a.on{background:var(--water-soft);color:var(--ink);font-weight:600}
+      .topnav a.cta{background:var(--water);color:#fff;font-weight:600}
+      @media (prefers-color-scheme: dark){.topnav a.cta{color:#04231c}}
+      main{max-width:1180px;margin:0 auto;padding:130px 22px 30px}
+      .sec-head{display:flex;align-items:baseline;gap:20px;flex-wrap:wrap;margin-bottom:16px}
+      .sec-index{font-size:12px;letter-spacing:.3em;color:var(--water)}
+      .sec-head h1{margin:0;font-family:var(--serif-cn);font-size:clamp(34px,6vw,58px);font-weight:900;letter-spacing:.03em;line-height:1.15}
+      .sec-head h1 .en{font-family:var(--serif);font-weight:500;letter-spacing:.1em}
+      .sec-lede{max-width:660px;color:var(--ink-2);line-height:2.05;font-size:16px;margin:0 0 34px;text-align:justify;text-justify:inter-ideograph}
+      .rule{height:1px;background:var(--line);margin:0 0 40px}
+      .motto{font-family:var(--serif-cn);font-size:clamp(22px,4vw,34px);line-height:1.8;margin:0;text-align:center}
+      .motto .en{display:block;font-family:var(--serif);font-style:italic;font-size:.68em;color:var(--muted);letter-spacing:.05em;margin-top:8px}
+      .mail-big{display:flex;justify-content:center;margin-top:30px}
+      .mail-big a{font-family:var(--mono);font-size:clamp(17px,3.6vw,26px);letter-spacing:.04em;color:var(--water);text-decoration:none;border-bottom:1px solid var(--water);padding:10px 4px;min-height:44px;display:inline-flex;align-items:center}
+      .routes{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:38px}
+      .routes .route{border:1px solid var(--line);border-radius:16px;padding:18px 22px;background:var(--panel);min-width:250px;flex:1 1 280px;max-width:420px;box-shadow:var(--card-shadow)}
+      .routes .route b{display:block;font-size:11px;letter-spacing:.22em;color:var(--muted);font-weight:500;margin-bottom:8px}
+      .routes .route span{font-size:15px;color:var(--ink);line-height:1.8;display:block}
+      .routes .route a{color:var(--water);text-decoration:none;font-family:var(--mono);font-size:15px}
+      .routes .route p{margin:8px 0 0;font-size:13px;color:var(--muted);line-height:1.8}
+      .steps{margin-top:44px;border:1px solid var(--line);border-radius:20px;background:var(--panel);box-shadow:var(--card-shadow);padding:28px 26px}
+      .steps h2{margin:0 0 6px;font-family:var(--serif-cn);font-size:20px;font-weight:900}
+      .steps ol{margin:14px 0 0;padding-left:22px;color:var(--ink-2);line-height:2;font-size:14.5px}
+      .next-row{display:flex;gap:12px;flex-wrap:wrap;margin-top:26px}
+      .next-row a{flex:1 1 220px;text-decoration:none;border:1px solid var(--line);border-radius:16px;padding:16px 18px;background:var(--panel);font-size:15px;font-weight:600;box-shadow:var(--card-shadow)}
+      .next-row a small{display:block;color:var(--muted);margin-top:4px;font-size:12px;font-weight:400;line-height:1.7}
+      footer{margin-top:100px;border-top:1px solid var(--line);background:var(--bg-deep)}
+      .foot{max-width:1180px;margin:0 auto;padding:56px 22px 50px;text-align:center}
+      .foot-row{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;color:var(--muted);font-size:13px;letter-spacing:.08em}
+      .foot-row span{border:1px solid var(--line);border-radius:999px;padding:8px 14px}
+      .foot small{display:block;margin-top:26px;color:var(--muted);font-size:11.5px;letter-spacing:.14em;line-height:2}
+    </style>
+  </head>
+  <body>
+    <nav class="topbar" aria-label="站点导航">
+      <a class="brand" href="../../index.html">NORVA<small>STUDIO</small></a>
+      <div class="topnav">
+        <a href="../../index.html">首页 · 星图</a>
+        <a href="onething.html">今日一事</a>
+        <a href="experiments.html">实验</a>
+        <a href="originals.html">原创</a>
+        <a href="products.html">产品</a>
+        <a href="archive.html">档案</a>
+        <a href="method.html">方法</a>
+        <a href="projects.html">委托</a>
+        <a class="cta on" href="contact.html">联系</a>
+      </div>
+    </nav>
+
+    <main>
+      <div class="sec-head">
+        <span class="sec-index mono">CONTACT</span>
+        <h1>联系 <span class="en">Contact</span></h1>
+      </div>
+      <p class="sec-lede">两条路，分工明确：正式的事走邮件，留档、说得清；快的事走微信，当场确认。费用与排期都不在站上标价，都在对话里确认。</p>
+      <div class="rule"></div>
+
+      <p class="motto">一个持续生长的数字创意实验室。
+        <span class="en">NORVA STUDIO — An Open Creative System</span>
+      </p>
+      <div class="mail-big">
+        <a href="mailto:tbmax.in@hotmail.com?subject=NORVA%20STUDIO%20—%20合作咨询">tbmax.in@hotmail.com</a>
+      </div>
+
+      <div class="routes">
+        <div class="route">
+          <b>正式合作 · 委托 · IP 授权</b>
+          <a href="mailto:tbmax.in@hotmail.com?subject=NORVA%20STUDIO%20—%20合作咨询">tbmax.in@hotmail.com</a>
+          <p>邮件里说清三件事：想做什么、给谁看、什么时候要。确认需求后，再谈费用与排期。</p>
+        </div>
+        <div class="route">
+          <b>产品咨询 · 体验码 · 快速确认</b>
+          <span>微信 · HMC-NORVA</span>
+          <p>内容引擎给主题、文档转换发样本、HMC 申请体验码、五项服务说需求——都在微信里当场确认。</p>
+        </div>
+      </div>
+
+      <div class="steps">
+        <h2>合作怎么开始</h2>
+        <ol>
+          <li>从任何一页出发：实验、原创、产品、档案，看到想做的那一件。</li>
+          <li>按上面的分工联系：正式合作发邮件，产品咨询加微信 HMC-NORVA。</li>
+          <li>需求确认后私聊商定费用与排期；制作类先付定金、带水印预览、确认后交付。</li>
+        </ol>
+      </div>
+
+      <nav class="next-row" aria-label="继续浏览">
+        <a href="projects.html">← 看委托范围<small>四类委托：短片纪录片 · AI 影像与 IP · 交互实验 · 内容后期</small></a>
+        <a href="../../index.html">回首页星图<small>从水面重新进入任何一个区</small></a>
+      </nav>
+    </main>
+
+    <footer>
+      <div class="foot">
+        <div class="foot-row">
+          <span>AI 时代的观察者 · 引导者 · 实践者</span>
+        </div>
+        <small>NORVA STUDIO — AN OPEN CREATIVE SYSTEM<br/>ONETHING · EXPERIMENTS · ORIGINALS · PRODUCTS · ARCHIVE · PROJECTS</small>
+      </div>
+    </footer>
+  </body>
+</html>
